@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ lesson.title }}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            direction: rtl;
+            text-align: right;
+            background-color: #E5C5BD;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .lesson-detail {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 30px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        .lesson-title {
+            color: #CF7041;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .lesson-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .lesson-content {
+            font-size: 1.6rem;
+            line-height: 1.8;
+            color: #5E718B;
+            margin-top: 20px;
+        }
+
+        .lesson-content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .quiz-link {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .quiz-link a {
+            background-color: #CF7041;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1.4rem;
+        }
+
+        .quiz-link a:hover {
+            background-color: #b54b1e;
+        }
+
+        .quiz-link i {
+            margin-left: 8px;
+        }
+
+        .back-lessons-link {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 30px;
+            color: #FFF;
+            background-color: #3498DB;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 1.6rem;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-lessons-link:hover {
+            background-color: #1ABC9C;
+        }
+
+        @media (max-width: 600px) {
+            .lesson-title {
+                font-size: 2rem;
+            }
+
+            .lesson-content {
+                font-size: 1.4rem;
+            }
+
+            .quiz-link a {
+                font-size: 1.2rem;
+            }
+
+            .back-lessons-link {
+                font-size: 1.4rem;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="lesson-detail">
+        <h2 class="lesson-title">{{ lesson.title }}</h2>
+
+        {% if lesson.background_image %}
+            <div class="lesson-image">
+                <img src="{{ lesson.background_image.url }}" alt="{{ lesson.title }}">
+            </div>
+        {% endif %}
+
+        <div class="lesson-content">
+            {{ lesson.content|safe }}
+        </div>
+
+        {% if lesson.quiz_url %}
+            <div class="quiz-link">
+                <a href="{{ lesson.quiz_url }}" target="_blank" rel="noopener noreferrer">
+                    <i class="fa fa-link"></i>
+                    أنشطة الدرس
+                </a>
+            </div>
+        {% endif %}
+
+        <!-- Back to Lessons Button -->
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="{% url 'lessons_list' %}" class="back-lessons-link">عودة إلى قائمة الدروس</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}إنشاء اختبار جديد{% endblock %}
+
+{% block content %}
+<div class="container mt-5 create-quiz-container">
+    <h2 class="page-title">إنشاء اختبار جديد</h2>
+    <form method="post" enctype="multipart/form-data"> <!-- Added enctype for file uploads -->
+        {% csrf_token %}
+        <div class="form-group quiz-details">
+            <h3 class="section-title">تفاصيل الاختبار</h3>
+            {{ quiz_form.as_p }}
+        </div>
+
+        <div class="form-group mcq-questions">
+            <h3 class="section-title">أسئلة الاختيار من متعدد</h3>
+            {{ mcq_formset.management_form }}
+            {% for form in mcq_formset %}
+                <div class="question border rounded p-3 my-3">
+                    <h4 class="question-title">السؤال {{ forloop.counter }}</h4>
+                    {{ form.as_p }} <!-- This already includes url and image fields -->
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group essay-questions">
+            <h3 class="section-title">أسئلة المقال القصير</h3>
+            {{ essay_formset.management_form }}
+            {% for form in essay_formset %}
+                <div class="question border rounded p-3 my-3">
+                    <h4 class="question-title">السؤال {{ forloop.counter }}</h4>
+                    {{ form.as_p }} <!-- This already includes url and image fields -->
+                </div>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">إنشاء الاختبار</button>
+    </form>
+</div>
+
+<style>
+    body {
+        font-family: 'Amiri', serif, 'Cairo', sans-serif;
+        background-color: #ffffff;
+        color: #8b5e3c;
+        direction: rtl;
+        margin: 0;
+        padding: 0;
+    }
+
+    .create-quiz-container {
+        width: 90%;
+        margin: 30px auto;
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 30px;
+        border: 5px solid #E2A55E;
+    }
+
+    .page-title {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: #CF7041;
+        font-weight: bold;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 15px;
+        color: #5E718B;
+    }
+
+    .question {
+        background-color: #FFF7E6;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 20px;
+    }
+
+    .question-title {
+        font-size: 1.5rem;
+        color: #8b5e3c;
+        margin-bottom: 10px;
+    }
+
+    .btn-primary {
+        background-color: #5E718B;
+        color: white;
+        border: none;
+        padding: 15px 20px;
+        border-radius: 15px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-size: 1.2rem;
+    }
+
+    .btn-primary:hover {
+        background-color: #CF7041;
+    }
+</style>
+{% endblock %}

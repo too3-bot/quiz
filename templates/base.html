@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}منصة ثروة{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        body {
+            font-family: 'Amiri', serif, 'Cairo', sans-serif;
+            background-color: #ffffff;
+            color: #ffffff;
+            direction: rtl;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            margin: 30px auto;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 30px;
+            border: 5px solid #E2A55E;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            background-color: #ffffff;
+        }
+
+        header .logo {
+            display: inline-block;
+            max-width: 150px;
+            margin-bottom: 15px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin: 10px 0;
+            color: #CF7041;
+            font-weight: bold;
+        }
+
+        header .tagline {
+            font-size: 1.5rem;
+            color: #8b5e3c;
+            margin-top: 10px;
+        }
+
+        nav {
+            background-color: #8b5e3c;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        nav a {
+            color: #f5e9d7;
+            font-weight: bold;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #CF7041;
+        }
+
+        .lesson-section {
+            padding: 20px;
+            border-radius: 20px;
+            margin: 20px 0;
+            background-color: #FFF7E6;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .lesson-section h3 {
+            color: #5E718B;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+
+        footer {
+            background-color: #8b5e3c;
+            color: #f5e9d7;
+            padding: 20px;
+            text-align: center;
+            margin-top: 30px;
+            border-radius: 15px;
+        }
+
+        .btn-primary {
+            background-color: #5E718B;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .btn-primary:hover {
+            background-color: #CF7041;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="{% static 'images/logokids.png' %}" alt="ثروة Logo" class="logo">
+        <p class="tagline">منصة تعليمية تهدُف لعميق الثروة اللفظية لطلبة الصف السابع الأساسي.</p>
+    </header>
+
+    <nav>
+        {% if user.is_authenticated %}
+            {% if user.userprofile.user_type == 'teacher' %}
+                <a href="{% url 'teacher_dashboard' %}">لوحة المعلم</a>
+                <a href="{% url 'make_quiz' %}">إنشاء اختبار</a>
+                <a href="{% url 'view_students' %}">تقدم الطلاب</a>
+                <a href="{% url 'list_submissions' %}">قائمة التقديمات</a>
+                <!-- Admin Link for Teachers Only -->
+                <a href="{% url 'admin:index' %}" style="color: red;">صفحة الإدارة</a>
+            {% elif user.userprofile.user_type == 'student' %}
+                <a href="{% url 'student_dashboard' %}">لوحة الطالب</a>
+                <a href="{% url 'view_quizzes' %}">الاختبارات المتاحة</a>
+            {% endif %}
+            <a href="{% url 'logout' %}">تسجيل الخروج</a>
+        {% else %}
+            <a href="{% url 'login' %}">تسجيل الدخول</a>
+        {% endif %}
+    </nav>
+
+    <div class="container">
+        <div class="content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+    <footer>
+        جميع الحقوق محفوظة &copy; 2024 - منصة ثروة
+    </footer>
+</body>
+</html>

@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}قائمة الإجابات المقدمة{% endblock %}
+
+{% block content %}
+<div class="container submitted-answers-container">
+    <h2 class="page-title">قائمة الإجابات المقدمة</h2>
+    <table class="table table-striped submitted-answers-table">
+        <thead>
+            <tr>
+                <th>الطالب</th>
+                <th>الاختبار</th>
+                <th>تاريخ التقديم</th>
+                <th>الإجراء</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for submission in submissions %}
+                <tr>
+                    <td>{{ submission.student.username }}</td>
+                    <td>{{ submission.quiz.title }}</td>
+                    <td>{{ submission.submitted_at }}</td>
+                    <td>
+                        <a href="{% url 'mark_quiz' submission.id %}" class="btn-action">تقييم الإجابة</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+    body {
+        font-family: 'Amiri', serif, 'Cairo', sans-serif;
+        background-color: #ffffff;
+        color: #8b5e3c;
+        direction: rtl;
+        margin: 0;
+        padding: 0;
+    }
+
+    .submitted-answers-container {
+        width: 90%;
+        margin: 30px auto;
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 30px;
+        border: 5px solid #E2A55E;
+    }
+
+    .page-title {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: #CF7041;
+        font-weight: bold;
+    }
+
+    .submitted-answers-table {
+        width: 100%;
+        margin-bottom: 20px;
+        border-collapse: collapse;
+    }
+
+    .submitted-answers-table th, .submitted-answers-table td {
+        padding: 15px;
+        border: 2px solid #E2A55E;
+        text-align: center;
+        font-size: 1.2rem;
+        color: #8b5e3c;
+    }
+
+    .submitted-answers-table th {
+        background-color: #5E718B;
+        color: #f5e9d7;
+    }
+
+    .submitted-answers-table tr:nth-child(even) {
+        background-color: #FFF7E6;
+    }
+
+    .btn-action {
+        background-color: #5E718B;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 10px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-action:hover {
+        background-color: #CF7041;
+    }
+</style>
+{% endblock %}

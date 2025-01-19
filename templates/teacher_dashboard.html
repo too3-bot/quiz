@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}لوحة تحكم المعلم{% endblock %}
+
+{% block content %}
+<div class="container teacher-dashboard">
+    <div class="dashboard-header">
+        <h2 class="page-title">لوحة تحكم المعلم</h2>
+    </div>
+
+    <!-- Section for Viewing Quizzes -->
+    <div class="created-quizzes">
+        <h3 class="section-title">الاختبارات التي تم إنشاؤها</h3>
+        <table class="dashboard-table">
+            <thead>
+                <tr>
+                    <th>عنوان الاختبار</th>
+                    <th>التاريخ</th>
+                    <th>إجراءات</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for quiz in quizzes %}
+                    <tr class="list-group-item">
+                        <td>{{ quiz.title }}</td>
+                        <td>{{ quiz.created_at }}</td>
+                        <td>
+                            <a href="{% url 'view_students' %}" class="dashboard-btn">عرض تقدم الطلاب</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Section for Viewing Submissions -->
+    <div class="student-submissions">
+        <h3 class="section-title">التقديمات من الطلاب</h3>
+        <table class="dashboard-table">
+            <thead>
+                <tr>
+                    <th>اسم الطالب</th>
+                    <th>عنوان الاختبار</th>
+                    <th>التاريخ</th>
+                    <th>إجراءات</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for submission in submissions %}
+                    <tr class="list-group-item">
+                        <td>{{ submission.student.username }}</td>
+                        <td>{{ submission.quiz.title }}</td>
+                        <td>{{ submission.submitted_at }}</td>
+                        <td>
+                            {% if not submission.marks %}
+                                <a href="{% url 'mark_quiz' submission.id %}" class="dashboard-btn">تقييم التقديم</a>
+                            {% else %}
+                                <span class="badge-success">تم التقييم</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Link to Create a New Quiz -->
+    <div class="create-quiz">
+        <a href="{% url 'make_quiz' %}" class="btn-create-quiz">إنشاء اختبار جديد</a>
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: 'Amiri', serif, 'Cairo', sans-serif;
+        direction: rtl;
+        text-align: right;
+        background-color: #ffffff;
+        color: #010101;
+        padding: 20px;
+    }
+
+    .teacher-dashboard {
+        margin: 0 auto;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 30px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+    }
+
+    .page-title {
+        color: #5E718B;
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 2.5rem;
+        font-weight: bold;
+    }
+
+    .section-title {
+        color: #5E718B;
+        margin-bottom: 15px;
+        font-size: 2rem;
+    }
+
+    .dashboard-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    .dashboard-table th, .dashboard-table td {
+        padding: 15px;
+        border: 2px dashed #5E718B;
+        text-align: center;
+        background-color: #F5F5F5;
+        font-size: 1.2rem;
+        color: #010101;
+    }
+
+    .list-group-item {
+        border-radius: 20px;
+        margin-bottom: 15px;
+    }
+
+    .dashboard-btn {
+        background-color: #5E718B;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 15px;
+        font-size: 1.2rem;
+        transition: background-color 0.3s ease;
+        text-decoration: none;
+    }
+
+    .dashboard-btn:hover {
+        background-color: #CF7041;
+    }
+
+    .btn-create-quiz {
+        display: inline-block;
+        background-color: #CF7041;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 15px;
+        font-size: 1.2rem;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        margin-top: 20px;
+    }
+
+    .btn-create-quiz:hover {
+        background-color: #5E718B;
+    }
+
+    .badge-success {
+        font-size: 1rem;
+        background-color: #5E718B;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 20px;
+    }
+</style>
+{% endblock %}

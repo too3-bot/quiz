@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}تقييم إجابات الطالب{% endblock %}
+
+{% block content %}
+<div class="container student-evaluation-container">
+    <h2 class="page-title">تقييم إجابات الطالب: {{ submission.student.username }}</h2>
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="answer-section mcq-answers-section">
+            <h3 class="section-title">إجابات الأسئلة الاختيارية</h3>
+            {% for answer in mcq_answers %}
+                <div class="form-group">
+                    <label class="question-label">{{ answer.question.question_text }}</label><br>
+                    <p class="student-answer">إجابة الطالب: {{ answer.get_selected_choice_display }}</p>
+                    <label for="mcq_score_{{ answer.id }}">الدرجة:</label>
+                    <input type="number" step="0.1" name="mcq_score_{{ answer.id }}" id="mcq_score_{{ answer.id }}" value="{{ answer.score }}" class="form-control score-input w-25">
+                </div>
+                <hr>
+            {% endfor %}
+        </div>
+
+        <div class="answer-section essay-answers-section">
+            <h3 class="section-title">إجابات الأسئلة المقالية</h3>
+            {% for answer in essay_answers %}
+                <div class="form-group">
+                    <label class="question-label">{{ answer.question.question_text }}</label><br>
+                    <p class="student-answer">إجابة الطالب:</p>
+                    <p class="border p-2 answer-text">{{ answer.answer_text }}</p>
+                    <label for="essay_score_{{ answer.id }}">الدرجة:</label>
+                    <input type="number" step="0.1" name="essay_score_{{ answer.id }}" id="essay_score_{{ answer.id }}" value="{{ answer.score }}" class="form-control score-input w-25">
+                </div>
+                <hr>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">حفظ التقييمات</button>
+    </form>
+</div>
+
+<style>
+    body {
+        font-family: 'Amiri', serif, 'Cairo', sans-serif;
+        background-color: #ffffff;
+        color: #8b5e3c;
+        direction: rtl;
+        margin: 0;
+        padding: 0;
+    }
+
+    .student-evaluation-container {
+        width: 90%;
+        margin: 30px auto;
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 30px;
+        border: 5px solid #E2A55E;
+    }
+
+    .page-title {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: #CF7041;
+        font-weight: bold;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 15px;
+        color: #5E718B;
+    }
+
+    .question-label {
+        font-size: 1.5rem;
+        color: #8b5e3c;
+        margin-bottom: 10px;
+    }
+
+    .student-answer {
+        font-size: 1.2rem;
+        color: #8b5e3c;
+        margin-bottom: 10px;
+    }
+
+    .answer-text {
+        background-color: #FFF7E6;
+        border-radius: 15px;
+        padding: 10px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .score-input {
+        border-radius: 10px;
+        padding: 5px;
+        font-size: 1rem;
+    }
+
+    .btn-primary {
+        background-color: #5E718B;
+        color: white;
+        border: none;
+        padding: 15px 20px;
+        border-radius: 15px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-size: 1.2rem;
+    }
+
+    .btn-primary:hover {
+        background-color: #CF7041;
+    }
+</style>
+{% endblock %}

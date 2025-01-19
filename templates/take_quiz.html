@@ -1,0 +1,205 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حل الاختبار: {{ quiz.title }}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            direction: rtl;
+            text-align: right;
+            background-color: #E5C5BD; /* Light pink background */
+            padding: 20px;
+        }
+
+        .take-quiz-container {
+            margin-top: 30px;
+            padding: 30px;
+            background-color: #FFFFFF;
+            border-radius: 25px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+            border: 5px solid #E2A55E; /* Orange border */
+        }
+
+        .page-title {
+            color: #CF7041; /* Orange title */
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .section-title {
+            color: #5E718B; /* Blue section title */
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            border-bottom: 3px solid #CF7041; /* Underline to divide sections */
+            padding-bottom: 10px;
+        }
+
+        .question-group {
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: #FFF7E6; /* Soft yellow background */
+            border-radius: 15px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-text {
+            font-weight: bold;
+            color: #CF7041; /* Orange for question text */
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .question-image {
+            margin-top: 15px;
+            margin-bottom: 15px;
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .choices-container {
+            margin-top: 15px;
+        }
+
+        .form-check {
+            margin-bottom: 15px;
+        }
+
+        .form-check-input {
+            margin-right: 10px;
+            accent-color: #CF7041; /* Orange for radio buttons */
+            width: 24px;
+            height: 24px;
+        }
+
+        .form-check-label {
+            font-size: 1.3rem;
+            color: #343a40;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #CF7041;
+            font-size: 1.5rem;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #B4BFC5;
+            border-radius: 15px;
+            box-sizing: border-box;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            min-height: 120px;
+            background-color: #F5F5F5;
+        }
+
+        .btn-primary.submit-button {
+            background-color: #5E718B; /* Blue button */
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .btn-primary.submit-button:hover {
+            background-color: #CF7041; /* Orange on hover */
+        }
+    </style>
+</head>
+<body>
+<div class="container take-quiz-container">
+    <h2 class="page-title">حل الاختبار: {{ quiz.title }}</h2>
+
+    <form method="post" enctype="multipart/form-data" class="quiz-form">
+        {% csrf_token %}
+
+        <!-- Multiple Choice Questions Section -->
+        <div class="mcq-section">
+            <h4 class="section-title">الأسئلة الاختيارية</h4>
+            {% for question in mcq_questions %}
+                <div class="question-group">
+                    <p class="question-text">{{ question.question_text }}</p>
+
+                    <!-- Optional URL -->
+                    {% if question.url %}
+                        <p><a href="{{ question.url }}" target="_blank" class="btn-link">رابط إضافي للمساعدة</a></p>
+                    {% endif %}
+
+                    <!-- Optional Image -->
+                    {% if question.image %}
+                        <img src="{{ question.image.url }}" alt="صورة السؤال" class="question-image">
+                    {% endif %}
+
+                    <div class="choices-container">
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" name="mcq_{{ question.id }}" value="1" id="mcq_{{ question.id }}_1" required>
+                            <label for="mcq_{{ question.id }}_1" class="form-check-label">{{ question.choice_1 }}</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" name="mcq_{{ question.id }}" value="2" id="mcq_{{ question.id }}_2">
+                            <label for="mcq_{{ question.id }}_2" class="form-check-label">{{ question.choice_2 }}</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" name="mcq_{{ question.id }}" value="3" id="mcq_{{ question.id }}_3">
+                            <label for="mcq_{{ question.id }}_3" class="form-check-label">{{ question.choice_3 }}</label>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            {% endfor %}
+        </div>
+
+        <!-- Essay Questions Section -->
+        <div class="essay-section">
+            <h4 class="section-title">إجابات الأسئلة المقالية</h4>
+            {% for question in essay_questions %}
+                <div class="form-group">
+                    <label for="essay_{{ question.id }}" class="form-label">{{ question.question_text }}</label>
+
+                    <!-- Optional URL -->
+                    {% if question.url %}
+                        <p><a href="{{ question.url }}" target="_blank" class="btn-link">رابط إضافي للمساعدة</a></p>
+                    {% endif %}
+
+                    <!-- Optional Image -->
+                    {% if question.image %}
+                        <img src="{{ question.image.url }}" alt="صورة السؤال" class="question-image">
+                    {% endif %}
+
+                    <textarea class="input-field" name="essay_{{ question.id }}" id="essay_{{ question.id }}" required></textarea>
+                </div>
+                <hr>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="btn-primary submit-button">إرسال</button>
+    </form>
+</div>
+</body>
+</html>

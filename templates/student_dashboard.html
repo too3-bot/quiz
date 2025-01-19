@@ -1,0 +1,259 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم الطالب</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        body {
+            font-family: 'Amiri', serif, 'Cairo', sans-serif;
+            direction: rtl;
+            text-align: right;
+            background-color: #ffffff;
+            padding: 20px;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        nav {
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 1.6rem;
+            border-radius: 10px;
+            background-color: #5E718B;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #FFD700;
+        }
+
+        .student-dashboard {
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 30px;
+            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
+            max-width: 800px;
+            border: 5px solid #E2A55E;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-message {
+            background-color: #5E718B; /* Gold background */
+            color: #ffffff; /* Text color */
+            padding: 20px;
+            border-radius: 10px;
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            display: none; /* Hidden by default */
+        }
+
+        .student-dashboard {
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 30px;
+            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
+            max-width: 800px;
+            border: 5px solid #E2A55E; /* Orange border */
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-title {
+            color: #FF7043; /* Brighter orange title for a playful look */
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .section-title {
+            color: #5E718B; /* Blue section title */
+            margin-bottom: 15px;
+            font-size: 2.2rem;
+            font-weight: bold;
+        }
+
+        .list-group-item {
+            border: 3px dashed #FF7043; /* Brighter orange dashed border */
+            border-radius: 20px;
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #FFFDE7; /* Lighter yellow background */
+            font-size: 1.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .quiz-title {
+            font-weight: bold;
+            color: #6A1B9A; /* Purple for an energetic look */
+        }
+
+        .quiz-status {
+            font-size: 1.2rem;
+            background-color: #4CAF50; /* Bright green status badge */
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+        }
+
+        .quiz-action-btn {
+            background-color: #5E718B; /* Blue button */
+            border: none;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 20px;
+            transition: background-color 0.3s ease;
+            font-size: 1.4rem;
+        }
+
+        .quiz-action-btn:hover {
+            background-color: #FF7043; /* Brighter orange on hover */
+        }
+
+        .character {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .character img {
+            width: 180px;
+            height: auto;
+        }
+
+        .character p {
+            font-size: 1.5rem;
+            color: #6A1B9A;
+            font-weight: bold;
+        }
+
+        .logout-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .logout-btn {
+            background-color: #FF7043; /* Bright orange button */
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 20px;
+            font-size: 1.4rem;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: #5E718B; /* Blue on hover */
+        }
+
+        .score-badge {
+            font-size: 1.2rem;
+            background-color: #5E718B; /* Blue badge for scores */
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            margin-right: 10px;
+        }
+
+        .lessons-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .lessons-btn {
+            background-color: #4CAF50; /* Green button for lessons */
+            color: white;
+            padding: 15px 25px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 1.4rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .lessons-btn:hover {
+            background-color: #FF7043;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const welcomeMessage = document.getElementById('welcome-message');
+            welcomeMessage.style.display = 'block';
+            setTimeout(function() {
+                welcomeMessage.style.display = 'none';
+            }, 10000); // Message will disappear after 10000 milliseconds (10 seconds)
+        });
+    </script>
+</head>
+<body>
+    <div id="welcome-message" class="welcome-message">
+        عزيزي الطالب:<br>
+        تسعى منصة (ثروة) إلى تمكين مهارات التعلم الذاتي لديك، وتنمية مهارات ثروتك اللفظية، وتقدم المنصة لك:<br>
+        - مقاطع مرئية تساعدك على تطوير مهاراتك.<br>
+        - أنشطة متنوعة تنمي مهارات الثروة لديك من دروس القراءة المقررة في كتابك المدرسي.<br>
+        - أنشطة إثرائية في ختام كل وحدة دراسية.<br>
+        نرجو لك وقتًا مميزًا برفقتنا🌟
+    </div>
+    <div class="student-dashboard">
+        <div class="character">
+            <img src="{% static 'images/logokids.png' %}" alt="Logo for Kids">
+            <p>منصة تعليمية تهدُف لتعميق الثروة اللفظية لطلبة الصف السابع الأساسي.</p>
+        </div>
+
+        <nav>
+            <a href="{% url 'videos_list' %}">الفيديوهات</a>
+            <a href="{% url 'lessons_list' %}">الدروس</a>
+            <a href="{% url 'logout' %}">تسجيل الخروج</a>
+        </nav>
+
+        <h2 class="page-title">لوحة تحكم الطالب</h2>
+        <div class="available-quizzes">
+            <h3 class="section-title">الاختبارات المتاحة</h3>
+            <ul class="list-group">
+                {% for quiz in available_quizzes %}
+                    <li class="list-group-item">
+                        <span class="quiz-title">{{ quiz.title }}</span>
+                        {% if quiz.id in completed_quiz_ids %}
+                            {% for submission in completed_submissions %}
+                                {% if submission.quiz.id == quiz.id %}
+                                    {% if submission.marks %}
+                                        <span class="score-badge">الدرجة: {{ submission.marks.total_marks }}</span>
+                                    {% else %}
+                                        <span class="score-badge">لم يتم تصحيح هذا الاختبار بعد</span>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                            <span class="badge-success quiz-status">تم الحل</span>
+                        {% else %}
+                            <a href="{% url 'take_quiz' quiz.id %}" class="quiz-action-btn">ابدأ الاختبار</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        
+    </div>
+</body>
+</html>

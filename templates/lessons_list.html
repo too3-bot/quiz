@@ -1,0 +1,198 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدروس المتاحة</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri&display=swap');
+
+        body {
+            font-family: 'Amiri', serif;
+            direction: rtl;
+            text-align: right;
+            background-color: #ffffff;
+            padding: 20px;
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-container {
+            margin-right: 20px;
+        }
+
+        .logo-container img {
+            width: 100px;
+            height: auto;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            color: #E67E22;
+            margin: 0;
+        }
+
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .lesson-item {
+            background-color: #FFF3E6;
+            border-radius: 25px;
+            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .lesson-item img {
+            width: 100%;
+            height: auto;
+            border-bottom: 4px solid #F39C12;
+        }
+
+        .lesson-item:hover {
+            transform: scale(1.08);
+        }
+
+        .lesson-title {
+            color: #D35400;
+            padding: 15px;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .back-dashboard-link {
+            display: inline-block;
+            margin: 30px auto;
+            padding: 15px 30px;
+            color: #FFF;
+            background-color: #E67E22;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 1.6rem;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-dashboard-link:hover {
+            background-color: #D35400;
+        }
+
+        @media (max-width: 600px) {
+            .lesson-title {
+                font-size: 1.4rem;
+                padding: 10px;
+            }
+
+            .back-dashboard-link {
+                font-size: 1.4rem;
+                padding: 10px 20px;
+            }
+
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-container">
+        <div class="logo-container">
+            <img src="{% static 'images/logokids.png' %}" alt="Logo">
+        </div>
+        <h2 class="page-title">الدروس</h2>
+    </div>
+
+    <div class="lessons-grid">
+        <div class="lesson-item">
+            <a href="{% url 'lesson_detail' 6 %}">
+                <img src="{% static 'images/lesson1.png' %}" alt="Lesson 1">
+                <div class="lesson-title">الدرس 1</div>
+            </a>
+        </div>
+        <div class="lesson-item">
+            <a href="{% url 'lesson_detail' 7 %}">
+                <img src="{% static 'images/lesson2.png' %}" alt="Lesson 2">
+                <div class="lesson-title">الدرس 2</div>
+            </a>
+        </div>
+        <div class="lesson-item">
+            <a href="{% url 'lesson_detail' 8 %}">
+                <img src="{% static 'images/lesson3.png' %}" alt="Lesson 3">
+                <div class="lesson-title">الدرس 3</div>
+            </a>
+        </div>
+        <div class="lesson-item">
+            <a href="{% url 'lesson_detail' 15 %}">
+                <img src="{% static 'images/practice1.png' %}" alt="Lesson 3">
+                <div class="lesson-title">النشاط الاثرائي 1</div>
+            </a>
+        </div>
+        <div class="lesson-item">
+            <a href="{% url 'lesson_detail' 9 %}">
+                <img src="{% static 'images/lesson4.png' %}" alt="Lesson 4">
+                <div class="lesson-title">الدرس 4</div>
+            </a>
+        </div>
+        <div class="lesson-item">
+            <a href="{% url 'lesson_detail' 10 %}">
+                <img src="{% static 'images/lesson5.png' %}" alt="Lesson 5">
+                <div class="lesson-title">الدرس 5</div>
+            </a>
+        </div>
+        <div class="lesson-item">
+            <a href="{% url 'lesson_detail' 11 %}">
+                <img src="{% static 'images/lesson6.png' %}" alt="Lesson 6">
+                <div class="lesson-title">الدرس 6</div>
+            </a>
+        </div>
+        <div class="lesson-item">
+            <a href="{% url 'lesson_detail' 16 %}">
+                <img src="{% static 'images/practice2.png' %}" alt="Lesson 3">
+                <div class="lesson-title">النشاط الاثرائي 2</div>
+            </a>
+        </div>
+        <div class="lesson-item">
+            <a href="{% url 'lesson_detail' 12 %}">
+                <img src="{% static 'images/lesson7.png' %}" alt="Lesson 7">
+                <div class="lesson-title">الدرس 7</div>
+            </a>
+        </div>
+        <div class="lesson-item">
+            <a href="{% url 'lesson_detail' 13 %}">
+                <img src="{% static 'images/lesson8.png' %}" alt="Lesson 8">
+                <div class="lesson-title">الدرس 8</div>
+            </a>
+        </div>
+        <div class="lesson-item">
+            <a href="{% url 'lesson_detail' 14 %}">
+                <img src="{% static 'images/lesson9.png' %}" alt="Lesson 9">
+                <div class="lesson-title">الدرس 9</div>
+            </a>
+        </div>
+        <div class="lesson-item">
+            <a href="{% url 'lesson_detail' 17 %}">
+                <img src="{% static 'images/practice3.png' %}" alt="Lesson 3">
+                <div class="lesson-title">النشاط الاثرائي 3</div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Back to Dashboard Button -->
+    <div style="text-align: center; margin-top: 40px;">
+        <a href="{% url 'student_dashboard' %}" class="back-dashboard-link">عودة إلى لوحة التحكم</a>
+    </div>
+</body>
+</html>

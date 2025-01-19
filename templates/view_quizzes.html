@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}عرض الاختبارات{% endblock %}
+
+{% block content %}
+<div class="container view-quizzes">
+    <h2 class="page-title">عرض الاختبارات المتاحة</h2>
+
+    <form method="post" class="quiz-form">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.as_p }}
+        </div>
+        <button type="submit" class="btn-primary">اختيار الاختبار</button>
+    </form>
+</div>
+{% endblock %}
+
+<style>
+    body {
+        font-family: 'Amiri', serif;
+        direction: rtl;
+        text-align: right;
+        background-color: #f5e9d7; /* Consistent background color with the rest of the platform */
+    }
+
+    .view-quizzes {
+        margin-top: 50px;
+        padding: 30px;
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .page-title {
+        color: #8b5e3c; /* Title color consistent with branding */
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        text-align: right; /* Keeps the form aligned to Arabic text flow */
+    }
+
+    label {
+        font-weight: bold;
+        color: #8b5e3c; /* Consistent label color */
+    }
+
+    .btn-primary {
+        background-color: #8b5e3c; /* Dark brown consistent with theme */
+        color: white;
+        border: none;
+        cursor: pointer;
+        padding: 12px;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+        text-align: center;
+    }
+
+    .btn-primary:hover {
+        background-color: #5e718b; /* Slightly different shade for hover effect */
+    }
+
+    input, select, textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #b4bfc5;
+        border-radius: 10px;
+        box-sizing: border-box;
+        margin-bottom: 15px;
+    }
+</style>
