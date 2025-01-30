@@ -127,11 +127,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/static/'  # Keep only one instance of this
+STATIC_URL = '/static/'
+STATIC_ROOT = '/root/quiz/staticfiles'
+
 STATICFILES_DIRS = [
-    BASE_DIR / "static",  # Development static files (local folder)
+    '/root/quiz/static/',
 ]
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # Add this line! (for production)
 
 # Media files (user-uploaded content)
 MEDIA_URL = '/media/'
