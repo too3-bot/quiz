@@ -125,18 +125,12 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
-
 STATIC_URL = '/static/'
-STATIC_ROOT = '/root/quiz/staticfiles'
-
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # Use BASE_DIR instead of absolute path
 STATICFILES_DIRS = [
-    '/root/quiz/static/',
+    BASE_DIR / 'static',  # Use BASE_DIR (project-relative path)
 ]
 
-# Media files (user-uploaded content)
+# Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-
-# Default primary key field type
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
