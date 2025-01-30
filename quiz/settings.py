@@ -131,7 +131,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = '/root/quiz/staticfiles'
 
 STATICFILES_DIRS = [
-   (os.path.join(BASE_DIR, '/root/quiz/static/'),)
+    '/root/quiz/static/',
 ]
 
 # Media files (user-uploaded content)
